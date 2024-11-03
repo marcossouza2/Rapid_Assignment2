@@ -32,6 +32,44 @@ namespace Assignment2_Rapid
                 textBox.Enter += TextBox_Enter;
                 textBox.Leave += TextBox_Leave;
             }
+            private void GenerateChartButton_Click(object sender, EventArgs e)
+        {
+            double[][] data = new double[5][];
+            data[0] = ParseData(textBoxLine1.Text);
+            data[1] = ParseData(textBoxLine2.Text);
+            data[2] = ParseData(textBoxLine3.Text);
+            data[3] = ParseData(textBoxLine4.Text);
+            data[4] = ParseData(textBoxLine5.Text);
+
+            lineChart.Series.Clear();
+
+            string[] labels = { "Line 1", "Line 2", "Line 3", "Line 4", "Line 5" };
+            Color[] colors = { Color.Red, Color.Blue, Color.Green, Color.Purple, Color.DarkSalmon };
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i] == null) continue;
+
+                Series series = new Series
+                {
+                    Name = labels[i],
+                    ChartType = SeriesChartType.Line,
+                    BorderWidth = 2,
+                    Color = colors[i],
+                    IsVisibleInLegend = true
+                };
+
+                for (int j = 0; j < data[i].Length; j++)
+                {
+                    series.Points.AddXY(j, data[i][j]);
+                }
+
+                lineChart.Series.Add(series);
+            }
+
+            lineChart.Legends.Clear();
+            lineChart.Legends.Add(new Legend("Legend") { Docking = Docking.Top });
+        }
     }
 }
 
