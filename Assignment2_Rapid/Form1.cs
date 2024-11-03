@@ -32,7 +32,27 @@ namespace Assignment2_Rapid
                 textBox.Enter += TextBox_Enter;
                 textBox.Leave += TextBox_Leave;
             }
-            private void GenerateChartButton_Click(object sender, EventArgs e)
+        }
+        private void TextBox_Enter(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox != null && textBox.Text == ExamplePlaceHolder)
+            {
+                textBox.Text = "";
+                textBox.ForeColor = Color.Black;
+            }
+        }
+        private void TextBox_Leave(object sender, EventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox != null && string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = ExamplePlaceHolder;
+                textBox.ForeColor = Color.Gray;
+            }
+        }
+
+        private void GenerateChartButton_Click(object sender, EventArgs e)
         {
             double[][] data = new double[5][];
             data[0] = ParseData(textBoxLine1.Text);
@@ -70,22 +90,22 @@ namespace Assignment2_Rapid
             lineChart.Legends.Clear();
             lineChart.Legends.Add(new Legend("Legend") { Docking = Docking.Top });
         }
-            private double[] ParseData(string input)
+        private double[] ParseData(string input)
+        {
+            try
             {
-                try
-                {
-                    return input.Split(',')
-                                .Select(val => double.Parse(val.Trim()))
-                                .ToArray();
-                }
-                catch
-                {
-                    MessageBox.Show("Invalid data format. Please enter comma-separated numbers.");
-                    return null;
-                }
+                return input.Split(',')
+                            .Select(val => double.Parse(val.Trim()))
+                            .ToArray();
+            }
+            catch
+            {
+                MessageBox.Show("Invalid data format. Please enter comma-separated numbers.");
+                return null;
             }
         }
     }
+}
 
 }
 
