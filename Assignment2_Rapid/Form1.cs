@@ -70,7 +70,24 @@ namespace Assignment2_Rapid
             lineChart.Legends.Clear();
             lineChart.Legends.Add(new Legend("Legend") { Docking = Docking.Top });
         }
+            private double[] ParseData(string input)
+            {
+                try
+                {
+                    return input.Split(',')
+                                .Select(val => double.Parse(val.Trim()))
+                                .ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("Invalid data format. Please enter comma-separated numbers.");
+                    return null;
+                }
+            }
+        }
     }
+
 }
+
 
 
