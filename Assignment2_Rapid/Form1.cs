@@ -106,8 +106,3 @@ namespace Assignment2_Rapid
         }
     }
 }
-
-}
-
-
-
